@@ -1,0 +1,1708 @@
+<odoo>
+    <data>
+
+        <!-- LISTA JUGADORES -->"
+
+        <record model="ir.ui.view" id="medievol.player_list">
+            <field name="name">player list</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORMULARIO JUGADORES -->
+        <record model="ir.ui.view" id="medievol.player_form">
+            <field name="name">player form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                        <notebook position="inside">
+                            <pages string="Ciudades">
+                                <field name="city_id">
+                                    <kanban>
+                                        <field name="id"/>
+                                        <field name="name"/>
+                                        <field name="poblation"/>
+                                        <field name="defense"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+
+                                                    <div class="oe_game_kanban_div_image">
+                                                        <img class="oe_kanban_image" t-att-src="kanban_image('medievol.city', 'image_medium', record.id.value)"/>
+                                                    </div>
+                                                    <div class="oe_kaban_details">
+                                                        <ul style="list-style:none; text-align:left;">
+                                                            <li><b><u>Nombre: </u></b></li>
+                                                            <li><a type="open"><field name="name"/></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                                <button name="%(medievol.launch_create_city_wizard)d" type="action" string="Crear ciudad" class ="oe_highligth"/>
+                            </pages>
+                        </notebook>
+            </field>
+        </record>
+
+        <!-- SEARCH JUGADOR -->
+
+        <record model="ir.ui.view" id="medievol.player_search">
+            <field name="name">player search</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="city_id"/>
+                    <filter name="its_player" string="Esta jugando" domain="[('city_id','&gt;', 0)]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- FORMULARIO PRODUCTOS
+        <record model="ir.ui.view" id="medievol.sale_order_form">
+            <field name="name">sale form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[4]" position="inside">
+                    <field name="juego"/>
+                </xpath>
+            </field>
+        </record>-->
+
+        <!-- LISTA REGIÓN -->
+
+        <record model="ir.ui.view" id="medievol.region_list">
+            <field name="name">region list</field>
+            <field name="model">medievol.region</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="player_id"/>
+                    <field name="city_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORMULARIO REGIÓN -->
+
+        <record model="ir.ui.view" id="medievol.region_form">
+            <field name="name">region form</field>
+            <field name="model">medievol.region</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="player_id"/>
+                            <field name="city_id"/>
+                            <field name="city_id_kanban"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- SEARCH REGION -->
+
+        <record model="ir.ui.view" id="medievol.region_search">
+            <field name="name">region search</field>
+            <field name="model">medievol.region</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="city_id"/>
+                    <field name="player_id"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- LISTA CIUDAD -->
+
+        <record model="ir.ui.view" id="medievol.city_list">
+            <field name="name">city list</field>
+            <field name="model">medievol.city</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="defense &gt; 500" decoration-primary="defense &gt; 50" decoration-success="defense &lt; 50" >
+                    <field name="name"/>
+                    <field name="poblation"/>
+                    <field name="defense"/>
+                    <field name="region_id"/>
+                </tree>
+
+            </field>
+        </record>
+
+        <act_window id="medievol.launch_graph_wizard"
+                    name="Graph"
+                    src_model="medievol.city"
+                    res_model="medievol.grafico"
+                    view_mode="graph"
+                    target="new"
+        />
+
+        <!-- FORMULARIO CIUDAD -->
+        <record model="ir.ui.view" id="medievol.city_form">
+            <field name="name">city form</field>
+            <field name="model">medievol.city</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="player_id"/>
+                                <field name="name"/>
+                                <field name="image" class="oe_edit_only"/>
+                                <field name="image_medium" widget="image" class="oe_read_only"/>
+
+                            </group>
+                            <group  string="Información de la Ciudad">
+                                <field name="poblation"/>
+                                <field name="defense"/>
+                                <field name="region_id"/>
+                            </group>
+                            <button name="%(medievol.launch_graph_wizard)d" type="action"  class ="oe_highligth">Mostrar Gráfico</button>
+                            <button name="%(medievol.launch_create_wars_wizard)d" type="action"  class ="oe_highligth">Atacar a ciudad</button>
+                        </group>
+                        <notebook>
+                            <page string="Construcciones">
+                                <group string="Edificios de producción">
+                                    <field name="quarry_datos" string="Cantera: ">
+                                        <kanban>
+                                            <field name="id"/>
+                                            <field name="lvl"/>
+                                            <field name="production"/>
+                                            <field name="means_id"/>
+                                            <field name="stone"/>
+                                            <field name="iron"/>
+                                            <templates>
+                                                <t t-name="kanban-box">
+                                                    <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                                        <div class="oe_game_kanban_div_image">
+                                                            <img class="oe_kanban_image" t-att-src="kanban_image('medievol.quarry', 'image_small', record.id.value)"/>
+
+                                                        </div>
+
+                                                        <div class="oe_kaban_details">
+                                                            <a type="open"><h4><field name="name"/></h4> </a>
+                                                            <ul style="list-style:none; text-align:left;">
+                                                                <li>Nivel: <field name="lvl"/> </li>
+                                                                <li>Producción: <field name="production"/> </li>
+                                                                <li>Recurso: <field name="means_id"/></li>
+                                                            </ul>
+                                                            <button name="level_up" type="object" attrs="{'invisible':[('lvl','in',['0','5'])]}" string="Level" class ="oe_game_kanban_button">Level Up</button>
+                                                            <ul style="list-style:none; text-align:left;" attrs="{'invisible':[('lvl','=','5')]}">
+                                                                <li>Coste de piedra: <field name="stone"/> </li>
+                                                                <li>Coste de hierro: <field name="iron"/> </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </templates>
+                                        </kanban>
+                                    </field>
+
+                                    <field name="mine_datos" string="Mina: ">
+                                        <kanban>
+                                            <field name="id"/>
+                                            <field name="name"/>
+                                            <field name="lvl"/>
+                                            <field name="production"/>
+                                            <field name="means_id"/>
+                                            <field name="stone"/>
+                                            <field name="iron"/>
+                                            <templates>
+                                                <t t-name="kanban-box">
+                                                    <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                                        <div class="oe_game_kanban_div_image">
+                                                            <img class="oe_kanban_image" t-att-src="kanban_image('medievol.mine', 'image_small', record.id.value)"/>
+
+                                                        </div>
+
+                                                        <div class="oe_kaban_details">
+                                                            <a type="open"><h4><field name="name"/></h4> </a>
+                                                            <ul style="list-style:none; text-align:left;">
+                                                                <li>Nivel: <field name="lvl"/> </li>
+                                                                <li>Producción: <field name="production"/> </li>
+                                                                <li>Recurso: <field name="means_id"/></li>
+                                                            </ul>
+                                                            <button name="level_up" type="object" attrs="{'invisible':[('lvl','in',['0','5'])]}" string="Level" class ="oe_game_kanban_button">Level Up</button>
+                                                            <ul style="list-style:none; text-align:left;" attrs="{'invisible':[('lvl','=','5')]}">
+                                                                <li>Coste de piedra: <field name="stone"/> </li>
+                                                                <li>Coste de hierro: <field name="iron"/> </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </templates>
+                                        </kanban>
+                                    </field>
+                                    <field name="farm_datos" string="Granja: ">
+                                        <kanban>
+                                            <field name="id"/>
+                                            <field name="name"/>
+                                            <field name="lvl"/>
+                                            <field name="production"/>
+                                            <field name="means_id"/>
+                                            <field name="stone"/>
+                                            <field name="iron"/>
+                                            <templates>
+                                                <t t-name="kanban-box">
+                                                    <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                                        <div class="oe_game_kanban_div_image">
+                                                            <img class="oe_kanban_image" t-att-src="kanban_image('medievol.farm', 'image_small', record.id.value)"/>
+
+                                                        </div>
+
+                                                        <div class="oe_kaban_details">
+                                                            <a type="open"><h4><field name="name"/></h4> </a>
+                                                            <ul style="list-style:none; text-align:left;">
+                                                                <li>Nivel: <field name="lvl"/> </li>
+                                                                <li>Producción: <field name="production"/> </li>
+                                                                <li>Recurso: <field name="means_id"/></li>
+                                                            </ul>
+                                                            <button name="level_up" type="object" attrs="{'invisible':[('lvl','in',['0','5'])]}" string="Level" class ="oe_game_kanban_button">Level Up</button>
+                                                            <ul style="list-style:none; text-align:left;" attrs="{'invisible':[('lvl','=','5')]}">
+                                                                <li>Coste de piedra: <field name="stone"/> </li>
+                                                                <li>Coste de hierro: <field name="iron"/> </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </templates>
+                                        </kanban>
+                                    </field>
+                                </group>
+                                <group string="Edificio Generales">
+                                    <field name="castle_datos" string="Castillo: ">
+                                        <kanban>
+                                            <field name="id"/>
+                                            <field name="name"/>
+                                            <field name="lvl"/>
+                                            <field name="limit_poblation"/>
+                                            <field name="stone"/>
+                                            <field name="iron"/>
+                                            <templates>
+                                                <t t-name="kanban-box">
+                                                    <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                                        <div class="oe_game_kanban_div_image">
+                                                            <img class="oe_kanban_image" t-att-src="kanban_image('medievol.castle', 'image_small', record.id.value)"/>
+                                                        </div>
+
+                                                        <div class="oe_kaban_details">
+                                                            <a type="open"><h4><field name="name"/></h4> </a>
+                                                            <ul style="list-style:none; text-align:left;">
+                                                                <li>Nivel: <field name="lvl"/> </li>
+                                                                <li>Limite de poblacion: <field name="limit_poblation"/> </li>
+                                                            </ul>
+                                                            <button name="level_up" type="object"  attrs="{'invisible':[('lvl','in',['0','5'])]}" string="Level" class ="oe_game_kanban_button">Level Up</button>
+                                                            <ul style="list-style:none; text-align:left;" attrs="{'invisible':[('lvl','=','5')]}">
+                                                                <li>Coste de piedra: <field name="stone"/> </li>
+                                                                <li>Coste de hierro: <field name="iron"/> </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </templates>
+                                        </kanban>
+                                    </field>
+                                    <field name="barracks_datos" string="Barracones: ">
+                                        <kanban>
+                                            <field name="id"/>
+                                            <field name="name"/>
+                                            <field name="lvl"/>
+                                            <field name="limit_warriors"/>
+                                            <field name="stone"/>
+                                            <field name="iron"/>
+                                            <templates>
+                                                <t t-name="kanban-box">
+                                                    <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                                        <div class="oe_game_kanban_div_image">
+                                                            <img class="oe_kanban_image" t-att-src="kanban_image('medievol.barracks', 'image_small', record.id.value)"/>
+
+                                                        </div>
+
+                                                        <div class="oe_kaban_details">
+                                                            <a type="open"><h4><field name="name"/></h4> </a>
+                                                            <ul style="list-style:none; text-align:left;">
+                                                                <li>Nivel: <field name="lvl"/> </li>
+                                                                <li>Limite de soldados: <field name="limit_warriors"/> </li>
+                                                            </ul>
+                                                            <button name="%(medievol.launch_create_soldiers_wizard)d" type="action" context="{'city_id':parent.id}" attrs="{'invisible':[('lvl','=',0)]}" class ="oe_game_kanban_button">Crear Soldados</button>
+                                                            <button name="level_up" type="object" attrs="{'invisible':[('lvl','!=',0)]}" string="Crear" class ="oe_game_kanban_button">Crear</button>
+                                                            <button name="level_up" type="object" attrs="{'invisible':[('lvl','in',[0,5])]}" string="Level" class ="oe_game_kanban_button">Level Up</button>
+                                                            <ul style="list-style:none; text-align:left;" attrs="{'invisible':[('lvl','=','5')]}">
+                                                                <li>Coste de piedra: <field name="stone"/> </li>
+                                                                <li>Coste de hierro: <field name="iron"/> </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </templates>
+                                        </kanban>
+                                    </field>
+                                    <field name="treasury_datos" string="Tesorería: ">
+                                        <kanban>
+                                            <field name="id"/>
+                                            <field name="name"/>
+                                            <field name="lvl"/>
+                                            <field name="production"/>
+                                            <field name="stone"/>
+                                            <field name="iron"/>
+                                            <templates>
+                                                <t t-name="kanban-box">
+                                                    <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                                        <div class="oe_game_kanban_div_image">
+                                                            <img class="oe_kanban_image" t-att-src="kanban_image('medievol.treasury', 'image_small', record.id.value)"/>
+
+                                                        </div>
+
+                                                        <div class="oe_kaban_details">
+                                                            <a type="open"><h4><field name="name"/></h4> </a>
+                                                            <ul style="list-style:none; text-align:left;">
+                                                                <li>Nivel: <field name="lvl"/> </li>
+                                                                <li>Producción: <field name="production"/> </li>
+                                                            </ul>
+                                                            <button name="level_up" type="object" attrs="{'invisible':[('lvl','!=',0)]}" string="Crear" class ="oe_game_kanban_button">Crear</button>
+                                                            <button name="level_up" type="object" attrs="{'invisible':[('lvl','in',[0,5])]}" string="Level" class ="oe_game_kanban_button">Level Up</button>
+                                                            <ul style="list-style:none; text-align:left;" attrs="{'invisible':[('lvl','=','5')]}">
+                                                                <li>Coste de piedra: <field name="stone"/> </li>
+                                                                <li>Coste de hierro: <field name="iron"/> </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </templates>
+                                        </kanban>
+                                    </field>
+                                    <field name="infirmary_datos" string="Enfermería: ">
+                                        <kanban>
+                                            <field name="id"/>
+                                            <field name="name"/>
+                                            <field name="lvl"/>
+                                            <field name="limit_injureds"/>
+                                            <field name="stone"/>
+                                            <field name="iron"/>
+                                            <templates>
+                                                <t t-name="kanban-box">
+                                                    <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                                        <div class="oe_game_kanban_div_image">
+                                                            <img class="oe_kanban_image" t-att-src="kanban_image('medievol.infirmary', 'image_small', record.id.value)"/>
+
+                                                        </div>
+
+                                                        <div class="oe_kaban_details">
+                                                            <a type="open"><h4><field name="name"/></h4> </a>
+                                                            <ul style="list-style:none; text-align:left;">
+                                                                <li>Nivel: <field name="lvl"/> </li>
+                                                                <li>Limite de heridos: <field name="limit_injureds"/> </li>
+                                                            </ul>
+                                                            <button name="level_up" type="object" attrs="{'invisible':[('lvl','!=',0)]}" string="Crear" class ="oe_game_kanban_button">Crear</button>
+                                                            <button name="level_up" type="object" attrs="{'invisible':[('lvl','in',[0,5])]}" string="Level" class ="oe_game_kanban_button">Level Up</button>
+                                                            <ul style="list-style:none; text-align:left;" attrs="{'invisible':[('lvl','=','5')]}">
+                                                                <li>Coste de piedra: <field name="stone"/> </li>
+                                                                <li>Coste de hierro: <field name="iron"/> </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </templates>
+                                        </kanban>
+                                    </field>
+                                    <field name="forge_datos" string="Forja: ">
+                                        <kanban>
+                                            <field name="id"/>
+                                            <field name="name"/>
+                                            <field name="lvl"/>
+                                            <field name="stone"/>
+                                            <field name="iron"/>
+                                            <templates>
+                                                <t t-name="kanban-box">
+                                                    <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                                        <div class="oe_game_kanban_div_image">
+                                                            <img class="oe_kanban_image" t-att-src="kanban_image('medievol.forge', 'image_small', record.id.value)"/>
+
+                                                        </div>
+
+                                                        <div class="oe_kaban_details">
+                                                            <a type="open"><h4><field name="name"/></h4> </a>
+                                                            <ul style="list-style:none; text-align:left;">
+                                                                <li>Nivel: <field name="lvl"/> </li>
+                                                            </ul>
+                                                            <button name="level_up" type="object" attrs="{'invisible':[('lvl','!=',0)]}" string="Crear" class ="oe_game_kanban_button">Crear</button>
+                                                            <button name="level_up" type="object" attrs="{'invisible':[('lvl','in',[0,5])]}" string="Level" class ="oe_game_kanban_button">Level Up</button>
+                                                            <ul style="list-style:none; text-align:left;" attrs="{'invisible':[('lvl','=','5')]}">
+                                                                <li>Coste de piedra: <field name="stone"/> </li>
+                                                                <li>Coste de hierro: <field name="iron"/> </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </templates>
+                                        </kanban>
+                                    </field>
+                                    <field name="wall_datos" string="Muro: ">
+                                        <kanban>
+                                            <field name="id"/>
+                                            <field name="name"/>
+                                            <field name="lvl"/>
+                                            <field name="stone"/>
+                                            <field name="iron"/>
+                                            <field name="defense"/>
+                                            <templates>
+                                                <t t-name="kanban-box">
+                                                    <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                                        <div class="oe_game_kanban_div_image">
+                                                            <img class="oe_kanban_image" t-att-src="kanban_image('medievol.wall', 'image_small', record.id.value)"/>
+
+                                                        </div>
+
+                                                        <div class="oe_kaban_details">
+                                                            <a type="open"><h4><field name="name"/></h4> </a>
+                                                            <ul style="list-style:none; text-align:left;">
+                                                                <li>Nivel: <field name="lvl"/> </li>
+                                                                <li>Defensa: <field name="defense"/> </li>
+                                                            </ul>
+                                                            <button name="level_up" type="object" attrs="{'invisible':[('lvl','!=',0)]}" string="Crear" class ="oe_game_kanban_button">Crear</button>
+                                                            <button name="level_up" type="object" attrs="{'invisible':[('lvl','in',[0,5])]}" string="Level" class ="oe_game_kanban_button">Level Up</button>
+                                                            <ul style="list-style:none; text-align:left;" attrs="{'invisible':[('lvl','=','5')]}">
+                                                                <li>Coste de piedra: <field name="stone"/> </li>
+                                                                <li>Coste de hierro: <field name="iron"/> </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </templates>
+                                        </kanban>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="Recursos">
+                                <field name="means_city_id">
+                                    <field name="cantidad"/>
+                                    <field name="means_id"/>
+                                </field>
+                            </page>
+                            <page string="Soldados">
+                                <field name="soldiers_city_id"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- KANBAN CIUDAD -->
+        <record model="ir.ui.view" id="medievol.city_kanban">
+            <field name="name">city kanban</field>
+            <field name="model">medievol.city</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="poblation"/>
+                    <field name="defense"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click"
+                                 style="-webkit-box-flex: 0; flex: none; width: 200px; min-width:100px; margin: 0px; border-width:2px; border-color:#000; text-align:center;">
+                                <b><u>Nombre: <field name="name"/></u></b>
+                                <a type="open" >
+                                    <img class="oe_kanban_image" t-att-alt="record.name.value" t-att-src="kanban_image('medievol.city', 'image_medium', record.id.value)"/>
+                                </a>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- SEARCH CIUDAD -->
+
+        <record model="ir.ui.view" id="medievol.city_search">
+            <field name="name">city search</field>
+            <field name="model">medievol.city</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="poblation"/>
+                    <field name="defense"/>
+                    <filter name="more_poblation" string="+50 población" domain="[('poblation','&gt;', 50)]"/>
+                    <filter name="100_poblation" string="Poblacion 100" domain="[('poblation','=', 100)]"/>
+                    <group string="Group By">
+                        <filter name="poblacion" string="Agrupar Poblacion" context="{'group_by': 'poblation'}"/>
+                        <filter name="defensa" string="Menos 50 Def" domain="[('defense','&lt;', 50)]" context="{'group_by': 'defense'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- LISTA SOLDADOS GUERRA -->
+        <record model="ir.ui.view" id="medievol.soldiers_wars_list">
+            <field name="name">soldiers_wars list</field>
+            <field name="model">medievol.soldiers_wars</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="city_id"/>
+                    <field name="soldiers_id"/>
+                    <field name="cantidad"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORMULARIO BATALLA -->
+        <record model="ir.ui.view" id="medievol.soldiers_wars_form">
+            <field name="name">soldiers_wars form</field>
+            <field name="model">medievol.soldiers_wars</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="Datos de Guerra">
+                            <field name="city_id" string="Ciudad: "/>
+                            <field name="city_attack_id" string="Ciudad atacada: "/>
+                            <field name="soldiers_id" string="Tipo de soldado: "/>
+                            <field name="cantidad" string="Cantidad: "/>
+                            <field name="player_id" string="Jugador: "/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- LISTA BATALLA -->
+        <record model="ir.ui.view" id="medievol.wars_list">
+            <field name="name">wars list</field>
+            <field name="model">medievol.wars</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="fecha_ini"/>
+                    <field name="fecha_fin"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORMULARIO BATALLA -->
+        <record model="ir.ui.view" id="medievol.wars_form">
+            <field name="name">wars form</field>
+            <field name="model">medievol.wars</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="Fechas">
+                            <field name="fecha_ini"/>
+                            <field name="fecha_fin"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- CALENDAR BATALLA -->
+        <record model="ir.ui.view" id="medievol.wars_calendar">
+            <field name="name">wars calendar</field>
+            <field name="model">medievol.wars</field>
+            <field name="arch" type="xml">
+                <calendar string="Fechas batallas" date_start="fecha_ini"
+                            date_stop="fecha_fin">
+                </calendar>
+            </field>
+        </record>
+
+        <!-- GRAPH GRAFICO -->
+        <record model="ir.ui.view" id="medievol.grafico_graph">
+            <field name="name">grafico graph</field>
+            <field name="model">medievol.grafico</field>
+            <field name="arch" type="xml">
+                <graph string="Points History" type="line">
+                    <field name="date" type="row"/>
+                    <field name="city_id" type="col"/>
+                    <field name="food" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- TREE GRAFICO -->
+        <record model="ir.ui.view" id="medievol.grafico_tree">
+            <field name="name">grafico tree</field>
+            <field name="model">medievol.grafico</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="date"/>
+                    <field name="city_id"/>
+                    <field name="food"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- SEARCH GRAFICO -->
+
+        <record model="ir.ui.view" id="medievol.grafico_search">
+            <field name="name">grafico search</field>
+            <field name="model">medievol.grafico</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="date"/>
+                    <field name="city_id"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- LISTA CANTERA -->
+
+        <record model="ir.ui.view" id="medievol.quarry_list">
+            <field name="name">quarry list</field>
+            <field name="model">medievol.quarry</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="lvl==1" decoration-primary="lvl==2" decoration-success="lvl==3" decoration-danger="lvl==4" decoration-warning="lvl==5">
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="production"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORMULARIO CANTERA -->
+
+        <record model="ir.ui.view" id="medievol.quarry_form">
+            <field name="name">quarry form</field>
+            <field name="model">medievol.quarry</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="image" class="oe_edit_only"/>
+                            <field name="image_small" widget="image" class="oe_read_only"/>
+                        </group>
+                        <group>
+                            <field name="name"/>
+                            <field name="lvl" context="{'default_lvl': 1}"/>
+                            <field name="production" default="50"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- KANBAN CANTERA -->
+
+        <record model="ir.ui.view" id="medievol.quarry_kanban">
+            <field name="name">quarry kanban</field>
+            <field name="model">medievol.quarry</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="lvl"/>
+                    <field name="production"/>
+                    <field name="means_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                <div class="oe_game_kanban_div_image">
+                                    <img class="oe_kanban_image" t-att-alt="record.name.value" t-att-src="kanban_image('medievol.quarry', 'image_small', record.id.value)"/>
+                                </div>
+                                <div class="oe_kaban_details">
+                                    <a type="open"><h4> Nombre: <field name="name"/></h4> </a>
+                                    <ul style="list-style:none; text-align:left;">
+                                        <li>Nivel: <field name="lvl"/> </li>
+                                        <li>Producción: <field name="production"/> </li>
+                                        <li>Recurso: <field name="means_id"/></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- SEARCH CANTERA -->
+
+        <record model="ir.ui.view" id="medievol.quarry_search">
+            <field name="name">quarry search</field>
+            <field name="model">medievol.quarry</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="lvl"/>
+                    <field name="production"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- LISTA MINA -->
+
+        <record model="ir.ui.view" id="medievol.mine_list">
+            <field name="name">mine list</field>
+            <field name="model">medievol.mine</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="production"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORMULARIO MINA -->
+
+        <record model="ir.ui.view" id="medievol.mine_form">
+            <field name="name">mine form</field>
+            <field name="model">medievol.mine</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="image" class="oe_edit_only"/>
+                            <field name="image_small" widget="image" class="oe_read_only"/>
+                        </group>
+                        <group>
+                            <field name="name"/>
+                            <field name="lvl"/>
+                            <field name="production"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- KANBAN MINA -->
+
+        <record model="ir.ui.view" id="medievol.mine_kanban">
+            <field name="name">mine kanban</field>
+            <field name="model">medievol.mine</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="production"/>
+                    <field name="means_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                <div class="oe_game_kanban_div_image">
+                                    <img class="oe_kanban_image" t-att-alt="record.name.value" t-att-src="kanban_image('medievol.mine', 'image_small', record.id.value)"/>
+                                </div>
+                                <div class="oe_kaban_details">
+                                    <a type="open"><h4> Nombre: <field name="name"/></h4> </a>
+                                    <ul style="list-style:none; text-align:left;">
+
+                                        <li>Nivel: <field name="lvl"/> </li>
+                                        <li>Producción: <field name="production"/> </li>
+                                        <li>Recurso: <field name="means_id"/></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- SEARCH MINA -->
+
+        <record model="ir.ui.view" id="medievol.mine_search">
+            <field name="name">mine search</field>
+            <field name="model">medievol.mine</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="lvl"/>
+                    <field name="production"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- LISTA GRANJA -->
+
+        <record model="ir.ui.view" id="medievol.farm_list">
+            <field name="name">farm list</field>
+            <field name="model">medievol.farm</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="production"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORMULARIO GRANJA -->
+
+        <record model="ir.ui.view" id="medievol.farm_form">
+            <field name="name">farm form</field>
+            <field name="model">medievol.farm</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="image" class="oe_edit_only"/>
+                            <field name="image_small" widget="image" class="oe_read_only"/>
+                        </group>
+                        <group>
+                            <field name="name"/>
+                            <field name="lvl"/>
+                            <field name="production"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- KANBAN GRANJA -->
+        <record model="ir.ui.view" id="medievol.farm_kanban">
+            <field name="name">farm kanban</field>
+            <field name="model">medievol.farm</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="production"/>
+                    <field name="means_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                    <img class="oe_kanban_image" t-att-alt="record.name.value" t-att-src="kanban_image('medievol.mine', 'image_small', record.id.value)"/>
+                                <div class="oe_kaban_details">
+                                    <a type="open"><h4> Nombre: <field name="name"/></h4></a>
+                                    <ul style="list-style:none; text-align:left;">
+                                        <li>Nivel: <field name="lvl"/> </li>
+                                        <li>Producción: <field name="production"/> </li>
+                                        <li>Recurso: <field name="means_id"/></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- SEARCH GRANJA -->
+
+        <record model="ir.ui.view" id="medievol.farm_search">
+            <field name="name">farm search</field>
+            <field name="model">medievol.farm</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="lvl"/>
+                    <field name="production"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- LISTA CASTILLO -->
+
+        <record model="ir.ui.view" id="medievol.castle_list">
+            <field name="name">castle list</field>
+            <field name="model">medievol.castle</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="limit_poblation"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORMULARIO CASTILLO -->
+
+        <record model="ir.ui.view" id="medievol.castle_form">
+            <field name="name">castle form</field>
+            <field name="model">medievol.castle</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="lvl"/>
+                            <field name="limit_poblation"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- KANBAN CASTILLO -->
+        <record model="ir.ui.view" id="medievol.castle_kanban">
+            <field name="name">castle kanban</field>
+            <field name="model">medievol.castle</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="limit_poblation"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                    <img class="oe_kanban_image" t-att-alt="record.name.value" t-att-src="kanban_image('medievol.castle', 'image_small', record.id.value)"/>
+                                <div class="oe_kaban_details">
+                                    <a type="open"><h4> Nombre: <field name="name"/></h4></a>
+                                    <ul style="list-style:none; text-align:left;">
+                                        <li>Nivel: <field name="lvl"/> </li>
+                                        <li>Limite Población: <field name="limit_poblation"/> </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- SEARCH CASTILLO -->
+
+        <record model="ir.ui.view" id="medievol.castle_search">
+            <field name="name">castle search</field>
+            <field name="model">medievol.castle</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="lvl"/>
+                    <field name="limit_poblation"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- LISTA ENFERMERÍA -->
+
+        <record model="ir.ui.view" id="medievol.infirmary_list">
+            <field name="name">infirmary list</field>
+            <field name="model">medievol.infirmary</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORMULARIO ENFERMERÍA -->
+
+        <record model="ir.ui.view" id="medievol.infirmary_form">
+            <field name="name">infirmary form</field>
+            <field name="model">medievol.infirmary</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="Enfermería">
+                            <field name="image" class="oe_edit_only"/>
+                            <field name="image_small" widget="image" class="oe_read_only"/>
+                        </group>
+                        <group string="Datos Enfermería">
+                            <field name="name"/>
+                            <field name="lvl"/>
+                            <field name="limit_injureds"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- KANBAN ENFERMERÍA -->
+        <record model="ir.ui.view" id="medievol.infirmary_kanban">
+            <field name="name">infirmary kanban</field>
+            <field name="model">medievol.infirmary</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="limit_injureds"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                    <img class="oe_kanban_image" t-att-alt="record.name.value" t-att-src="kanban_image('medievol.infirmary', 'image_small', record.id.value)"/>
+                                <div class="oe_kaban_details">
+                                    <a type="open"><h4> Nombre: <field name="name"/></h4></a>
+                                    <ul style="list-style:none; text-align:left;">
+                                        <li>Nivel: <field name="lvl"/> </li>
+                                        <li>Limite Heridos: <field name="limit_injureds"/> </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- SEARCH ENFERMERÍA -->
+
+        <record model="ir.ui.view" id="medievol.infirmary_search">
+            <field name="name">infirmary search</field>
+            <field name="model">medievol.infirmary</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="limit_injureds"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- LISTA FORJA -->
+
+        <record model="ir.ui.view" id="medievol.forge_list">
+            <field name="name">forge list</field>
+            <field name="model">medievol.forge</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORMULARIO FORJA -->
+
+        <record model="ir.ui.view" id="medievol.forge_form">
+            <field name="name">forge form</field>
+            <field name="model">medievol.forge</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="Forja">
+                            <field name="image" class="oe_edit_only"/>
+                            <field name="image_small" widget="image" class="oe_read_only"/>
+                        </group>
+                        <group string="Datos Forja">
+                            <field name="name"/>
+                            <field name="lvl"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- KANBAN FORJA -->
+        <record model="ir.ui.view" id="medievol.forge_kanban">
+            <field name="name">forge kanban</field>
+            <field name="model">medievol.forge</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                    <img class="oe_kanban_image" t-att-alt="record.name.value" t-att-src="kanban_image('medievol.forge', 'image_small', record.id.value)"/>
+                                <div class="oe_kaban_details">
+                                    <a type="open"><h4> Nombre: <field name="name"/></h4></a>
+                                    <ul style="list-style:none; text-align:left;">
+                                        <li>Nivel: <field name="lvl"/> </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- SEARCH FORJA -->
+
+        <record model="ir.ui.view" id="medievol.forge_search">
+            <field name="name">forge search</field>
+            <field name="model">medievol.forge</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- LISTA TESORERÍA -->
+
+        <record model="ir.ui.view" id="medievol.treasury_list">
+            <field name="name">treasury list</field>
+            <field name="model">medievol.treasury</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="production"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORMULARIO TESORERÍA -->
+
+        <record model="ir.ui.view" id="medievol.treasury_form">
+            <field name="name">treasury form</field>
+            <field name="model">medievol.treasury</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="Tesorería">
+                            <field name="image" class="oe_edit_only"/>
+                            <field name="image_small" widget="image" class="oe_read_only"/>
+                        </group>
+                        <group string="Datos Tesorería">
+                            <field name="name"/>
+                            <field name="lvl"/>
+                            <field name="production"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- KANBAN TESORERÍA -->
+        <record model="ir.ui.view" id="medievol.treasury_kanban">
+            <field name="name">treasury kanban</field>
+            <field name="model">medievol.treasury</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="production"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                    <img class="oe_kanban_image" t-att-alt="record.name.value" t-att-src="kanban_image('medievol.treasury', 'image_small', record.id.value)"/>
+                                <div class="oe_kaban_details">
+                                    <a type="open"><h4> Nombre: <field name="name"/></h4></a>
+                                    <ul style="list-style:none; text-align:left;">
+                                        <li>Nivel: <field name="lvl"/> </li>
+                                        <li>Producción: <field name="production"/> </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- SEARCH TESORERÍA -->
+
+        <record model="ir.ui.view" id="medievol.treasury_search">
+            <field name="name">treasury search</field>
+            <field name="model">medievol.treasury</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="production"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- LISTA BARRACONES -->
+
+        <record model="ir.ui.view" id="medievol.barracks_list">
+            <field name="name">barracks list</field>
+            <field name="model">medievol.barracks</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="limit_warriors"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORMULARIO BARRACONES -->
+
+        <record model="ir.ui.view" id="medievol.barracks_form">
+            <field name="name">barracks form</field>
+            <field name="model">medievol.barracks</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="lvl"/>
+                            <field name="limit_warriors"/>
+                        </group>
+                        <group>
+                            <field name="city_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- KANBAN BARRACONES -->
+
+        <record model="ir.ui.view" id="medievol.barracks_kanban">
+            <field name="name">barracks kanban</field>
+            <field name="model">medievol.barracks</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="limit_warriors"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                    <img class="oe_kanban_image" t-att-alt="record.name.value" t-att-src="kanban_image('medievol.barracks', 'image_small', record.id.value)"/>
+                                <div class="oe_kaban_details">
+                                    <a type="open"><h4> Nombre: <field name="name"/></h4></a>
+                                    <ul style="list-style:none; text-align:left;">
+                                        <li>Nivel: <field name="lvl"/> </li>
+                                        <li>Limite Soldados: <field name="limit_warriors"/> </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- SEARCH BARRACONES -->
+
+        <record model="ir.ui.view" id="medievol.barracks_search">
+            <field name="name">barracks search</field>
+            <field name="model">medievol.barracks</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="limit_warriors"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- LISTA MURO -->
+
+        <record model="ir.ui.view" id="medievol.wall_list">
+            <field name="name">wall list</field>
+            <field name="model">medievol.wall</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="defense"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORMULARIO MURO -->
+
+        <record model="ir.ui.view" id="medievol.wall_form">
+            <field name="name">wall form</field>
+            <field name="model">medievol.wall</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="Muro">
+                            <field name="image" class="oe_edit_only"/>
+                            <field name="image_small" widget="image" class="oe_read_only"/>
+                        </group>
+                        <group string="Datos Muro">
+                            <field name="name"/>
+                            <field name="lvl"/>
+                            <field name="defense"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- KANBAN TESORERÍA -->
+        <record model="ir.ui.view" id="medievol.wall_kanban">
+            <field name="name">wall kanban</field>
+            <field name="model">medievol.wall</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="defense"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                                    <img class="oe_kanban_image" t-att-alt="record.name.value" t-att-src="kanban_image('medievol.wall', 'image_small', record.id.value)"/>
+                                <div class="oe_kaban_details">
+                                    <a type="open"><h4> Nombre: <field name="name"/></h4></a>
+                                    <ul style="list-style:none; text-align:left;">
+                                        <li>Nivel: <field name="lvl"/> </li>
+                                        <li>Defensa: <field name="defense"/> </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- SEARCH MURO -->
+
+        <record model="ir.ui.view" id="medievol.wall_search">
+            <field name="name">wall search</field>
+            <field name="model">medievol.wall</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="lvl"/>
+                    <field name="defense"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- LISTA SOLDADOS -->
+
+        <record model="ir.ui.view" id="medievol.soldiers_list">
+            <field name="name">soldiers list</field>
+            <field name="model">medievol.soldiers</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="attack"/>
+                    <field name="defense"/>
+                    <field name="type"/>
+                    <field name="life"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORMULARIO SOLDADOS -->
+
+        <record model="ir.ui.view" id="medievol.soldiers_form">
+            <field name="name">soldiers form</field>
+            <field name="model">medievol.soldiers</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="Datos Soldados">
+                            <field name="name"/>
+                            <field name="attack"/>
+                            <field name="defense"/>
+                            <field name="type"/>
+                            <field name="life"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- LISTA SOLDADOS CIUDAD -->
+
+        <record model="ir.ui.view" id="medievol.soldiers_city_list">
+            <field name="name">soldiers_city list</field>
+            <field name="model">medievol.soldiers_city</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="cantidad"/>
+                    <field name="city_id"/>
+                    <field name="soldiers_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- FORMULARIO SOLDADOS CIUDAD-->
+
+        <record model="ir.ui.view" id="medievol.soldiers_city_form">
+            <field name="name">soldiers_city form</field>
+            <field name="model">medievol.soldiers_city</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="Datos Soldados Ciudad">
+                            <field name="cantidad"/>
+                            <field name="city_id"/>
+                            <field name="soldiers_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- LISTA RECURSOS -->
+
+        <record model="ir.ui.view" id="medievol.means_list">
+            <field name="name">means list</field>
+            <field name="model">medievol.means</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="quarry_id"/>
+                    <field name="mine_id"/>
+                    <field name="farm_id"/>
+                    <field name="treasury_id"/>
+                    <field name="means_city_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- LISTA RECURSOS CIUDAD -->
+
+        <record model="ir.ui.view" id="medievol.means_city_list">
+            <field name="name">means_city list</field>
+            <field name="model">medievol.means_city</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="cantidad"/>
+                    <field name="city_id"/>
+                    <field name="means_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- LISTA INVESTIGACIONES -->
+
+        <record model="ir.ui.view" id="medievol.investigation_list">
+            <field name="name">investigation list</field>
+            <field name="model">medievol.investigation</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="increment"/>
+                    <field name="investigation_buildings_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- LISTA INVESTIGACIONES CONSTRUCCIONES -->
+
+        <record model="ir.ui.view" id="medievol.investigation_buildings_list">
+            <field name="name">investigation_buildings list</field>
+            <field name="model">medievol.investigation_buildings</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="tipo"/>
+                    <field name="duration"/>
+                    <field name="investigation_id"/>
+                    <field name="castle_id"/>
+                    <field name="barracks_id"/>
+                    <field name="treasury_id"/>
+                    <field name="forge_id"/>
+                    <field name="infirmary_id"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- ACTION JUGADORES -->
+
+        <record model="ir.actions.act_window" id="medievol.action_player">
+            <field name="name">player window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_its_player':1}</field>
+        </record>
+
+         <!-- ACTION PRODUCTOS -->
+
+        <record model="ir.actions.act_window" id="medievol.action_products">
+            <field name="name">player window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- ACTION GRAFICO -->
+
+        <record model="ir.actions.act_window" id="medievol.action_grafico">
+            <field name="name">grafico window</field>
+            <field name="res_model">medievol.grafico</field>
+            <field name="view_mode">tree,form,graph</field>
+        </record>
+
+        <!-- ACTION BATALLAS -->
+
+        <record model="ir.actions.act_window" id="medievol.action_wars">
+            <field name="name">wars window</field>
+            <field name="res_model">medievol.wars</field>
+            <field name="view_mode">tree,form,calendar</field>
+        </record>
+
+        <!-- ACTION REGIÓN -->
+
+        <record model="ir.actions.act_window" id="medievol.action_region">
+            <field name="name">region window</field>
+            <field name="res_model">medievol.region</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- ACTION CIUDAD -->
+
+        <record model="ir.actions.act_window" id="medievol.action_city">
+            <field name="name">city window</field>
+            <field name="res_model">medievol.city</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{'search_default_more_poblation':1}</field>
+        </record>
+
+        <!-- ACTION CANTERA -->
+
+        <record model="ir.actions.act_window" id="medievol.action_quarry">
+            <field name="name">quarry window</field>
+            <field name="res_model">medievol.quarry</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <!-- ACTION MINA -->
+
+        <record model="ir.actions.act_window" id="medievol.action_mine">
+            <field name="name">mine window</field>
+            <field name="res_model">medievol.mine</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <!-- ACTION GRANJA -->
+
+        <record model="ir.actions.act_window" id="medievol.action_farm">
+            <field name="name">farm window</field>
+            <field name="res_model">medievol.farm</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <!-- ACTION CASTILLO -->
+
+        <record model="ir.actions.act_window" id="medievol.action_castle">
+            <field name="name">castle window</field>
+            <field name="res_model">medievol.castle</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <!-- ACTION INFIRMARY -->
+
+        <record model="ir.actions.act_window" id="medievol.action_infirmary">
+            <field name="name">infirmary window</field>
+            <field name="res_model">medievol.infirmary</field>
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+
+        <!-- ACTION FORJA -->
+
+        <record model="ir.actions.act_window" id="medievol.action_forge">
+            <field name="name">forge window</field>
+            <field name="res_model">medievol.forge</field>
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+
+        <!-- ACTION SOLDADOS GUERRA -->
+
+        <record model="ir.actions.act_window" id="medievol.action_soldiers_wars">
+            <field name="name">soldiers_wars window</field>
+            <field name="res_model">medievol.soldiers_wars</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- ACTION TESORERÍA -->
+
+        <record model="ir.actions.act_window" id="medievol.action_treasury">
+            <field name="name">treasury window</field>
+            <field name="res_model">medievol.treasury</field>
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+
+        <!-- ACTION BARRACONES -->
+
+        <record model="ir.actions.act_window" id="medievol.action_barracks">
+            <field name="name">barracks window</field>
+            <field name="res_model">medievol.barracks</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+        <!-- ACTION MURO -->
+
+        <record model="ir.actions.act_window" id="medievol.action_wall">
+            <field name="name">wall window</field>
+            <field name="res_model">medievol.wall</field>
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+
+        <!-- ACTION SOLDADOS -->
+
+        <record model="ir.actions.act_window" id="medievol.action_soldiers">
+            <field name="name">soldiers window</field>
+            <field name="res_model">medievol.soldiers</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- ACTION SOLDADOS CIUDAD -->
+
+        <record model="ir.actions.act_window" id="medievol.action_soldiers_city">
+            <field name="name">soldiers_city window</field>
+            <field name="res_model">medievol.soldiers_city</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- ACTION RECURSOS -->
+
+        <record model="ir.actions.act_window" id="medievol.action_means">
+            <field name="name">means window</field>
+            <field name="res_model">medievol.means</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- ACTION RECURSOS CIUDAD -->
+
+        <record model="ir.actions.act_window" id="medievol.action_means_city">
+            <field name="name">means_city window</field>
+            <field name="res_model">medievol.means_city</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- ACTION INVESTIGACIONES -->
+
+        <record model="ir.actions.act_window" id="medievol.action_investigation">
+            <field name="name">investigation window</field>
+            <field name="res_model">medievol.investigation</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- ACTION INVESTIGACIONES CONSTRUCCIONES -->
+
+        <record model="ir.actions.act_window" id="medievol.action_investigation_buildings">
+            <field name="name">investigation_buildings window</field>
+            <field name="res_model">medievol.investigation_buildings</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- MENUS -->
+
+        <menuitem name="Medievol" id="medievol.menu_root"/>
+
+        <menuitem name="Jugador" id="medievol.menu_jugador" parent="medievol.menu_root"/>
+        <menuitem name="Construcciones" id="medievol.menu_construcciones" parent="medievol.menu_root"/>
+        <menuitem name="Investigaciones" id="medievol.menu_investigaciones" parent="medievol.menu_root"/>
+
+        <menuitem name="Jugadores" id="medievol.menu_player_list" parent="medievol.menu_jugador" action="medievol.action_player"/>
+        <menuitem name="Region" id="medievol.menu_region_list" parent="medievol.menu_jugador" action="medievol.action_region"/>
+        <menuitem name="Grafico" id="medievol.menu_graph_list" parent="medievol.menu_jugador" action="medievol.action_grafico"/>
+        <menuitem name="Batallas" id="medievol.menu_wars_list" parent="medievol.menu_jugador" action="medievol.action_wars"/>
+        <menuitem name="Soldados Guerra" id="medievol.menu_soldiers_wars_list" parent="medievol.menu_jugador" action="medievol.action_soldiers_wars"/>
+        <menuitem name="Productos" id="medievol.menu_products_list" parent="medievol.menu_jugador" action="medievol.action_products"/>
+
+        <menuitem name="Ciudad" id="medievol.menu_city_list" parent="medievol.menu_construcciones" action="medievol.action_city"/>
+        <menuitem name="Cantera" id="medievol.menu_quarry_list" parent="medievol.menu_construcciones" action="medievol.action_quarry"/>
+        <menuitem name="Mina" id="medievol.menu_mine_list" parent="medievol.menu_construcciones" action="medievol.action_mine"/>
+        <menuitem name="Granja" id="medievol.menu_farm_list" parent="medievol.menu_construcciones" action="medievol.action_farm"/>
+        <menuitem name="Castillo" id="medievol.menu_castle_list" parent="medievol.menu_construcciones" action="medievol.action_castle"/>
+        <menuitem name="Enfermería" id="medievol.menu_infirmary_list" parent="medievol.menu_construcciones" action="medievol.action_infirmary"/>
+        <menuitem name="Forja" id="medievol.menu_forge_list" parent="medievol.menu_construcciones" action="medievol.action_forge"/>
+        <menuitem name="Tesorería" id="medievol.menu_treasury_list" parent="medievol.menu_construcciones" action="medievol.action_treasury"/>
+        <menuitem name="Barracones" id="medievol.menu_barracks_list" parent="medievol.menu_construcciones" action="medievol.action_barracks"/>
+        <menuitem name="Muro" id="medievol.menu_wall_list" parent="medievol.menu_construcciones" action="medievol.action_wall"/>
+        <menuitem name="Recursos" id="medievol.menu_means_list" parent="medievol.menu_construcciones" action="medievol.action_means"/>
+        <menuitem name="Recursos Ciudad" id="medievol.menu_means_city_list" parent="medievol.menu_construcciones" action="medievol.action_means_city"/>
+        <menuitem name="Soldados" id="medievol.menu_soldiers_list" parent="medievol.menu_construcciones" action="medievol.action_soldiers"/>
+        <menuitem name="Soldados Ciudad" id="medievol.menu_soldiers_city_list" parent="medievol.menu_construcciones" action="medievol.action_soldiers_city"/>
+
+
+
+        <menuitem name="Investigacion" id="medievol.menu_investigation_list" parent="medievol.menu_investigaciones" action="medievol.action_investigation"/>
+        <menuitem name="Investigacion Construcciones" id="medievol.menu_investigation_buildings_list" parent="medievol.menu_investigaciones" action="medievol.action_investigation_buildings"/>
+
+
+    </data>
+</odoo>
