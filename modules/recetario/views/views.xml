@@ -53,7 +53,7 @@
       </field>
     </record>
 
-    <!-- USUARIOS -->
+    <!-- USUARIOS
 
     <record model="ir.ui.view" id="recetario.usuarios_form">
       <field name="name">usuario form</field>
@@ -73,13 +73,11 @@
           </pages>
         </notebook>
       </field>
-    </record>
+    </record>-->
 
     <!-- CAMPOS DE SEARCH -->
 
     <!-- USUARIOS -->
-
-    <!-- SEARCH JUGADOR -->
 
         <record model="ir.ui.view" id="medievol.player_search">
             <field name="name">player search</field>
