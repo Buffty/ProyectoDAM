@@ -1,15 +1,18 @@
 <odoo>
     <data>
-
-        <record id="recetas1" model="programa_recetario.recetas">
-            <field name="name">Prueba</field>
-        </record>
-
         <record id="usuario_default" model="programa_recetario.usuarios">
             <field name="name">Usuario de Prueba</field>
             <field name="passwd">1234</field>
             <field name="is_app">True</field>
-            <field name="recetas_id" ref="recetas1"/>
+        </record>
+
+        <record id="recetas1" model="programa_recetario.recetas">
+            <field name="name">Prueba</field>
+            <field name="descripcion">Prueba</field>
+            <field name="tipo">Prueba</field>
+            <field name="dificultad">Prueba</field>
+            <field name="duracion">Prueba</field>
+            <field name="usuarios_id" ref="usuario_default"/>
         </record>
         <!--   <record id="object1" model="programa_recetario.programa_recetario"> -->
         <!--     <field name="name">Object 1</field> -->
