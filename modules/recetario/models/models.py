@@ -9,7 +9,6 @@ class recetario(models.Model):
      descripcion = fields.Char()
      tipo = fields.Char()
      dificultad = fields.Char()
-     nombreUsuario = fields.Char()
      duracion = fields.Char()
      usuario_id = fields.Many2one('res.partner')
 

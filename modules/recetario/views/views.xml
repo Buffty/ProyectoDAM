@@ -1,60 +1,103 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-    <!--
-    <record model="ir.ui.view" id="recetario.list">
-      <field name="name">recetario list</field>
-      <field name="model">recetario.recetario</field>
+
+    <!-- CAMPOS DE LISTAS -->
+
+    <!-- RECETAS -->
+
+    <record model="ir.ui.view" id="recetario.recetas_list">
+      <field name="name">recetas list</field>
+      <field name="model">recetario.recetas</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
+          <field name="nombre"/>
+          <field name="tipo"/>
+          <field name="nombreUsuario"/>
         </tree>
       </field>
     </record>
-    -->
 
-    <!-- actions opening views on models -->
-    <!--
-    <record model="ir.actions.act_window" id="recetario.action_window">
-      <field name="name">recetario window</field>
-      <field name="res_model">recetario.recetario</field>
-      <field name="view_mode">tree,form</field>
-    </record>
-    -->
+    <!-- USUARIOS -->
 
-    <!-- server action to the one above -->
-    <!--
-    <record model="ir.actions.server" id="recetario.action_server">
-      <field name="name">recetario server</field>
-      <field name="model_id" ref="model_recetario_recetario"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": self._name,
-        }
+    <record model="ir.ui.view" id="recetario.usuarios_list">
+      <field name="name">usuarios list</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_tree"/>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
       </field>
     </record>
-    -->
 
-    <!-- Top menu item -->
-    <!--
-    <menuitem name="recetario" id="recetario.menu_root"/>
-    -->
-    <!-- menu categories -->
-    <!--
-    <menuitem name="Menu 1" id="recetario.menu_1" parent="recetario.menu_root"/>
-    <menuitem name="Menu 2" id="recetario.menu_2" parent="recetario.menu_root"/>
-    -->
-    <!-- actions -->
-    <!--
-    <menuitem name="List" id="recetario.menu_1_list" parent="recetario.menu_1"
-              action="recetario.action_window"/>
-    <menuitem name="Server to list" id="recetario" parent="recetario.menu_2"
-              action="recetario.action_server"/>
-    -->
+    <!-- CAMPOS DE FORMULARIOS -->
+
+    <!-- RECETAS -->
+
+    <record model="ir.ui.view" id="recetario.recetas_form">
+      <field name="name">recetas form</field>
+      <field name="model">recetario.recetas</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="nombre"/>
+            </group>
+            <group>
+              <field name="descripcion"/>
+              <field name="tipo"/>
+              <field name="dificultad"/>
+              <field name="duracion"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- USUARIOS -->
+
+    <record model="ir.ui.view" id="recetario.usuarios_form">
+      <field name="name">usuario form</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+        <notebook position="inside">
+          <pages string="Recetas">
+            <field name="id_recetario">
+              <field name="nombre"/>
+              <field name="descripcion"/>
+              <field name="tipo"/>
+              <field name="dificultad"/>
+              <field name="duracion"/>
+            </field>
+          </pages>
+        </notebook>
+      </field>
+    </record>
+
+    <!-- CAMPOS DE ACTION -->
+
+    <!-- RECETAS -->
+
+    <record model="ir.actions.act_window" id="recetario.recetas_action_window">
+      <field name="name">recetas window</field>
+      <field name="res_model">recetario.recetas</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- USUARIOS -->
+
+    <!-- ACTION JUGADORES -->
+
+    <record model="ir.actions.act_window" id="recetario.usuarios_action_window">
+      <field name="name">usuario window</field>
+      <field name="res_model">res.partner</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Recetario" id="recetario.menu_root"/>
+
+    <menuitem name="Recetas" id="recetario.recetas" parent="recetario.menu_root" action="recetario.recetas_action_window"/>
+    <menuitem name="Usuario" id="recetario.usuarios" parent="recetario.menu_root" action="recetario.usuarios_action_window"/>
   </data>
 </odoo>
