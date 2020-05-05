@@ -12,7 +12,6 @@
         <tree>
           <field name="nombre"/>
           <field name="tipo"/>
-          <field name="nombreUsuario"/>
         </tree>
       </field>
     </record>
