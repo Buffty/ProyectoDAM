@@ -63,6 +63,7 @@
         <notebook position="inside">
           <pages string="Recetas">
             <field name="id_recetario">
+              <field name="id"/>
               <field name="nombre"/>
               <field name="descripcion"/>
               <field name="tipo"/>

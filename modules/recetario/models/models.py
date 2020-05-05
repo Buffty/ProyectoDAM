@@ -2,7 +2,7 @@
 
 from odoo import models, fields, api
 
-class recetario(models.Model):
+class recetas(models.Model):
      _name = 'recetario.recetas'
 
      nombre = fields.Char()
