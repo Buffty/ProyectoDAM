@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record model="ir.cron" forcecreate="True" id="medievol.cron_update">
+            <field name="name">Medievol: Cron Update</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">model.update_means()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="activity_user_type">specific</field>
+            <field name="doall" eval="False"/>
+        </record>
+    </data>
+</odoo>

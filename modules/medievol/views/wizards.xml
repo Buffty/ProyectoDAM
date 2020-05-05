@@ -1,0 +1,159 @@
+<odoo>
+    <data>
+
+        <!-- WIZARDS DE SOLDADOS -->
+
+        <record model="ir.ui.view" id="medievol.create_soldiers_wizard">
+            <field name="name">wizard create_soldiers</field>
+            <field name="model">medievol.create_soldiers</field>
+            <field name="arch" type="xml">
+                <form string="Creación de soldados">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group states="i,c,f" string="Información básica">
+                                <field name="city" string="Ciudad asignada: "/>
+                                <field name="soldiers" string="Tipo de soldado: " attrs="{'readonly':[('state','in',['c','f'])]}"/>
+                                <field name="quantity" string="Cantidad: " attrs="{'readonly':[('state','in',['c','f'])]}"/>
+                            </group>
+                            <group states="c,f" string="Recursos necesarios">
+                                <field name="cfoodsoldier" string="Coste de alimentos: "/>
+                                <field name="cgoldsoldier" string="Coste de oro: "/>
+                            </group>
+                            <group states="c,f" string="Recursos disponibles">
+                                <field name="cfoodcity" string="Alimentos guardados: "/>
+                                <field name="cgoldcity" string="Oro depositando: "/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <group states="i,c,f">
+                            <button name="back" type="object" class="oe_highligth" string="Volver"/>
+                        </group>
+                        <group states="i,c">
+                            <button name="next" type="object" class="oe_highligth" string="Siguiente"/>
+                        </group>
+                        <group states="f">
+                            <button name="new" type="object" class="oe_highligth" string="Crear"/>
+                        </group>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="medievol.launch_create_soldiers_wizard"
+                    name="Create Soldiers"
+                    src_model="medievol.barracks"
+                    res_model="medievol.create_soldiers"
+                    view_mode="form"
+                    target="new"
+        />
+
+         <!-- WIZARDS DE CIUDADES -->
+
+        <record model="ir.ui.view" id="medievol.create_city_wizard">
+            <field name="name">wizard create_city</field>
+            <field name="model">medievol.create_city</field>
+            <field name="arch" type="xml">
+                <form string="Creación de Ciudad">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group states="i,f" string="Información básica">
+                                <field name="player" string="Jugador asignado: "/>
+                                <field name="region" string="Región: " attrs="{'readonly':[('state','=','f')]}"/>
+                                <field name="nombre" string="Nombre ciudad: " attrs="{'readonly':[('state','=','f')]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <group states="i,f">
+                            <button name="back" type="object" class="oe_highligth" string="Volver"/>
+                        </group>
+                        <group states="i">
+                            <button name="next" type="object" class="oe_highligth" string="Siguiente"/>
+                        </group>
+                        <group states="f">
+                            <button name="new" type="object" class="oe_highligth" string="Crear"/>
+                        </group>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="medievol.launch_create_city_wizard"
+                    name="Creación Ciudad"
+                    src_model="res.partner"
+                    res_model="medievol.create_city"
+                    view_mode="form"
+                    target="new"
+        />
+        <!-- WIZARDS DE GUERRAS -->
+
+        <record model="ir.ui.view" id="medievol.create_wars_wizard">
+            <field name="name">wizard create_wars</field>
+            <field name="model">medievol.create_wars</field>
+            <field name="arch" type="xml">
+                <form string="Creación de Batalla">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group states="i,f" string="Información básica">
+                                <field name="city" string="Ciudad asignado: "/>
+                                <field name="player" string="Jugador asignado: "/>
+                                <group string="Fechas de la Batalla">
+                                    <field name="fecha_ini" string="Inicio:" attrs="{'readonly':[('state','=','f')]}"/>
+                                    <field name="fecha_fin" string="Fin:" attrs="{'readonly':[('state','=','f')]}"/>
+                                </group>
+                            </group>
+                            <group states="c,f" string="Atacar a una ciudad: ">
+                                <field name="city" string="Ciudad asignado: " attrs="{'invisible':[('state','=','f')]}"/>
+                                <field name="city_attack" string="Atacar a:" attrs="{'readonly':[('state','=','f')]}"/>
+                            </group>
+                            <group states="i,f" string="Soldados a enviar">
+                                <field name="tipo" string="Tipo: " attrs="{'invisible':[('state','=','f')]}"/>
+                                <field name="quantity" string="Cantidad: " attrs="{'invisible':[('state','=','f')]}"/>
+                                <button name="send_soldiers" type="object" class ="oe_highlight" attrs="{'invisible':[('state','=','f')]}">Enviar soldados</button>
+                                <field name="wiz_soldiers" string="Soldados a la batalla:" attrs="{'readonly':[('state','in',['c','f'])]}">
+                                    <tree>
+                                        <field name="tipo"/>
+                                        <field name="quantity"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <group states="c,f">
+                            <button name="back" type="object" class="oe_highligth" string="Volver"/>
+                        </group>
+                        <group states="i">
+                            <button name="exit" type="object" class="oe_highligth" string="Salir"/>
+                        </group>
+                        <group states="i,c">
+                            <button name="next" type="object" class="oe_highligth" string="Siguiente"/>
+                        </group>
+                        <group states="f">
+                            <button name="new_battle" type="object" class="oe_highligth" string="Crear"/>
+                        </group>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="medievol.launch_create_wars_wizard"
+                    name="Creación de Guerras"
+                    src_model="medievol.city"
+                    res_model="medievol.create_wars"
+                    view_mode="form"
+                    target="new"
+        />
+
+    </data>
+</odoo>
