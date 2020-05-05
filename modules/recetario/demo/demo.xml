@@ -1,18 +1,4 @@
 <odoo>
     <data>
-        <!--
-        <record id="recetario.recetas1" model="recetario.recetas1">
-            <field name="nombre">Prueba</field>
-            <field name="descripcion">Prueba</field>
-            <field name="tipo">Prueba</field>
-            <field name="dificultad">Prueba</field>
-            <field name="duracion">Prueba</field>
-        </record>
-        <record id="recetario.usuario1" model="res.partner">
-            <field name="name">Prueba1</field>
-            <field name="passwd">1234</field>
-            <field name="id_recetario" ref="recetario.recetas1"/>
-            <field name="aplicacion">true</field>
-        </record>-->
     </data>
 </odoo>

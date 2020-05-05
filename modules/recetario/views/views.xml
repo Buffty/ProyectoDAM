@@ -1,10 +1,6 @@
 <odoo>
   <data>
 
-    <!-- CAMPOS DE LISTAS -->
-
-    <!-- RECETAS -->
-
     <record model="ir.ui.view" id="recetario.recetas_list">
       <field name="name">recetas list</field>
       <field name="model">recetario.recetas</field>
@@ -15,23 +11,6 @@
         </tree>
       </field>
     </record>
-
-    <!-- USUARIOS
-
-    <record model="ir.ui.view" id="recetario.usuarios_list">
-      <field name="name">usuarios list</field>
-      <field name="model">res.partner</field>
-      <field name="inherit_id" ref="base.view_partner_tree"/>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-        </tree>
-      </field>
-    </record>-->
-
-    <!-- CAMPOS DE FORMULARIOS -->
-
-    <!-- RECETAS -->
 
     <record model="ir.ui.view" id="recetario.recetas_form">
       <field name="name">recetas form</field>
@@ -52,65 +31,11 @@
         </form>
       </field>
     </record>
-
-    <!-- USUARIOS
-
-    <record model="ir.ui.view" id="recetario.usuarios_form">
-      <field name="name">usuario form</field>
-      <field name="model">res.partner</field>
-      <field name="inherit_id" ref="base.view_partner_form"/>
-      <field name="arch" type="xml">
-        <notebook position="inside">
-          <pages string="Recetas">
-            <field name="id_recetario">
-              <field name="id"/>
-              <field name="nombre"/>
-              <field name="descripcion"/>
-              <field name="tipo"/>
-              <field name="dificultad"/>
-              <field name="duracion"/>
-            </field>
-          </pages>
-        </notebook>
-      </field>
-    </record>-->
-
-    <!-- CAMPOS DE SEARCH -->
-
-    <!-- USUARIOS
-
-        <record model="ir.ui.view" id="medievol.player_search">
-            <field name="name">player search</field>
-            <field name="model">res.partner</field>
-            <field name="arch" type="xml">
-                <search>
-                    <field name="nombre"/>
-                    <field name="aplicacion"/>
-                    <filter name="its_app" string="Aplicacion" domain="[('aplicacion','=', True)]"/>
-                </search>
-            </field>
-        </record>
--->
-    <!-- CAMPOS DE ACTION -->
-
-    <!-- RECETAS -->
-
     <record model="ir.actions.act_window" id="recetario.recetas_action_window">
       <field name="name">recetas window</field>
       <field name="res_model">recetario.recetas</field>
       <field name="view_mode">tree,form</field>
     </record>
-
-    <!-- USUARIOS -->
-
-    <!-- ACTION JUGADORES
-
-    <record model="ir.actions.act_window" id="recetario.usuarios_action_window">
-      <field name="name">usuario window</field>
-      <field name="res_model">res.partner</field>
-      <field name="view_mode">tree,form</field>
-    </record>-->
-
     <menuitem name="Recetario" id="recetario.menu_root"/>
 
     <menuitem name="Recetas" id="recetario.recetas_menu" parent="recetario.menu_root" action="recetario.recetas_action_window"/>
