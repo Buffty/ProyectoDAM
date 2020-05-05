@@ -9,6 +9,7 @@
             <field name="name">Usuario de Prueba</field>
             <field name="passwd">1234</field>
             <field name="is_app">True</field>
+            <field name="recetas_id" ref="recetas1"/>
         </record>
         <!--   <record id="object1" model="programa_recetario.programa_recetario"> -->
         <!--     <field name="name">Object 1</field> -->
