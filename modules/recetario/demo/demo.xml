@@ -1,5 +1,6 @@
 <odoo>
     <data>
+        <!--
         <record id="recetario.recetas1" model="recetario.recetas1">
             <field name="nombre">Prueba</field>
             <field name="descripcion">Prueba</field>
@@ -12,6 +13,6 @@
             <field name="passwd">1234</field>
             <field name="id_recetario" ref="recetario.recetas1"/>
             <field name="aplicacion">true</field>
-        </record>
+        </record>-->
     </data>
 </odoo>
