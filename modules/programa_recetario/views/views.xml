@@ -16,10 +16,16 @@
       <field name="view_mode">tree,form</field>
     </record>
 
+    <record model="ir.actions.act_window" id="programa_recetario.usuarios_action_window">
+      <field name="name">usuarios window</field>
+      <field name="res_model">res.partner</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
     <menuitem name="Programa Recetario" id="programa_recetario.menu_root"/>
 
     <menuitem name="Recetas" id="programa_recetario.recetas_menu" parent="programa_recetario.menu_root" action="programa_recetario.recetas_action_window"/>
-
+    <menuitem name="Usuarios" id="programa_recetario.usuarios_menu" parent="programa_recetario.menu_root" action="programa_recetario.usuarios_action_window"/>
 
 
     <!-- actions -->
