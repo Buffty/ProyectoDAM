@@ -75,6 +75,24 @@
       </field>
     </record>
 
+    <!-- CAMPOS DE SEARCH -->
+
+    <!-- USUARIOS -->
+
+    <!-- SEARCH JUGADOR -->
+
+        <record model="ir.ui.view" id="medievol.player_search">
+            <field name="name">player search</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="nombre"/>
+                    <field name="aplicacion"/>
+                    <filter name="its_app" string="Aplicacion" domain="[('aplicacion','=', True)]"/>
+                </search>
+            </field>
+        </record>
+
     <!-- CAMPOS DE ACTION -->
 
     <!-- RECETAS -->
@@ -93,6 +111,7 @@
       <field name="name">usuario window</field>
       <field name="res_model">res.partner</field>
       <field name="view_mode">tree,form</field>
+      <field name="context">{'search_default_its_app':1}</field>
     </record>
 
     <menuitem name="Recetario" id="recetario.menu_root"/>

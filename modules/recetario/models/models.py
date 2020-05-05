@@ -19,5 +19,6 @@ class usuario(models.Model):
     passwd = fields.Char()
 
     id_recetario = fields.One2many('recetario.recetas','usuario_id',ondelete='cascade')
+    aplicacion = fields.Boolean(default=True)
 
 
