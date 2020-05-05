@@ -1,30 +1,17 @@
 <odoo>
     <data>
-        <!--  -->
-        <!--   <record id="object0" model="recetario.recetario"> -->
-        <!--     <field name="name">Object 0</field> -->
-        <!--     <field name="value">0</field> -->
-        <!--   </record> -->
-        <!--  -->
-        <!--   <record id="object1" model="recetario.recetario"> -->
-        <!--     <field name="name">Object 1</field> -->
-        <!--     <field name="value">10</field> -->
-        <!--   </record> -->
-        <!--  -->
-        <!--   <record id="object2" model="recetario.recetario"> -->
-        <!--     <field name="name">Object 2</field> -->
-        <!--     <field name="value">20</field> -->
-        <!--   </record> -->
-        <!--  -->
-        <!--   <record id="object3" model="recetario.recetario"> -->
-        <!--     <field name="name">Object 3</field> -->
-        <!--     <field name="value">30</field> -->
-        <!--   </record> -->
-        <!--  -->
-        <!--   <record id="object4" model="recetario.recetario"> -->
-        <!--     <field name="name">Object 4</field> -->
-        <!--     <field name="value">40</field> -->
-        <!--   </record> -->
-        <!--  -->
+        <record id="recetario.recetas1" model="recetario.recetas1">
+            <field name="nombre">Prueba</field>
+            <field name="descripcion">Prueba</field>
+            <field name="tipo">Prueba</field>
+            <field name="dificultad">Prueba</field>
+            <field name="duracion">Prueba</field>
+        </record>
+        <record id="recetario.usuario1" model="res.partner">
+            <field name="name">Prueba1</field>
+            <field name="passwd">1234</field>
+            <field name="id_recetario" ref="recetario.recetas1"/>
+            <field name="aplicacion">true</field>
+        </record>
     </data>
 </odoo>
