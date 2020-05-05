@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_recetario_recetario,recetario.recetario,model_recetario_recetario,,1,0,0,0
+access_recetario_recetas,recetario.recetas,model_recetario_recetas,,1,1,1,1

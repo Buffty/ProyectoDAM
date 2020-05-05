@@ -2,14 +2,23 @@
 
 from odoo import models, fields, api
 
-# class recetario(models.Model):
-#     _name = 'recetario.recetario'
+class recetario(models.Model):
+     _name = 'recetario.recetas'
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         self.value2 = float(self.value) / 100
+     nombre = fields.Char()
+     descripcion = fields.Char()
+     tipo = fields.Char()
+     dificultad = fields.Char()
+     nombreUsuario = fields.Char()
+     duracion = fields.Char()
+     usuario_id = fields.Many2one('res.partner')
+
+
+class usuario(models.Model):
+    _inherit = 'res.partner'
+    _name = 'res.partner'
+    passwd = fields.Char()
+
+    id_recetario = fields.One2many('recetario.recetas','usuario_id',ondelete='cascade')
+
+
