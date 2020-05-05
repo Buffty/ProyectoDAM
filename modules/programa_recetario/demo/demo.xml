@@ -3,7 +3,7 @@
         <record id="usuario_default" model="programa_recetario.usuarios">
             <field name="name">Usuario de Prueba</field>
             <field name="passwd">1234</field>
-            <field name="is_app">True</field>
+            <field name="is_app" value="True"/>
         </record>
 
         <record id="recetas1" model="programa_recetario.recetas">
