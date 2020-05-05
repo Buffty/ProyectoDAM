@@ -1,11 +1,9 @@
 <odoo>
     <data>
-        <!--  -->
-        <!--   <record id="object0" model="programa_recetario.programa_recetario"> -->
-        <!--     <field name="name">Object 0</field> -->
-        <!--     <field name="value">0</field> -->
-        <!--   </record> -->
-        <!--  -->
+
+        <record id="recetas1" model="programa_recetario.recetas">
+            <field name="name">Prueba</field>
+        </record>
         <!--   <record id="object1" model="programa_recetario.programa_recetario"> -->
         <!--     <field name="name">Object 1</field> -->
         <!--     <field name="value">10</field> -->

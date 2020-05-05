@@ -1,60 +1,31 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-    <!--
-    <record model="ir.ui.view" id="programa_recetario.list">
-      <field name="name">programaRecetario list</field>
-      <field name="model">programa_recetario.programa_recetario</field>
+    <record model="ir.ui.view" id="programa_recetario.recetas_list">
+      <field name="name">recetas list</field>
+      <field name="model">programa_recetario.recetas</field>
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
         </tree>
       </field>
     </record>
-    -->
 
-    <!-- actions opening views on models -->
-    <!--
-    <record model="ir.actions.act_window" id="programa_recetario.action_window">
-      <field name="name">programaRecetario window</field>
-      <field name="res_model">programa_recetario.programa_recetario</field>
+
+    <record model="ir.actions.act_window" id="programa_recetario.recetas_action_window">
+      <field name="name">recetas window</field>
+      <field name="res_model">programa_recetario.recetas</field>
       <field name="view_mode">tree,form</field>
     </record>
-    -->
 
-    <!-- server action to the one above -->
-    <!--
-    <record model="ir.actions.server" id="programa_recetario.action_server">
-      <field name="name">programaRecetario server</field>
-      <field name="model_id" ref="model_programa_recetario_programa_recetario"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": self._name,
-        }
-      </field>
-    </record>
-    -->
+    <menuitem name="Programa Recetario" id="programa_recetario.menu_root"/>
 
-    <!-- Top menu item -->
-    <!--
-    <menuitem name="programaRecetario" id="programa_recetario.menu_root"/>
-    -->
-    <!-- menu categories -->
-    <!--
-    <menuitem name="Menu 1" id="programa_recetario.menu_1" parent="programa_recetario.menu_root"/>
-    <menuitem name="Menu 2" id="programa_recetario.menu_2" parent="programa_recetario.menu_root"/>
-    -->
+    <menuitem name="Recetas" id="programa_recetario.recetas_menu" parent="programa_recetario.menu_root" action="programa_recetario.recetas_action_window"/>
+
+
     <!-- actions -->
     <!--
     <menuitem name="List" id="programa_recetario.menu_1_list" parent="programa_recetario.menu_1"
               action="programa_recetario.action_window"/>
-    <menuitem name="Server to list" id="programa_recetario" parent="programa_recetario.menu_2"
-              action="programa_recetario.action_server"/>
     -->
   </data>
 </odoo>
