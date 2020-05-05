@@ -113,6 +113,6 @@
 
     <menuitem name="Recetario" id="recetario.menu_root"/>
 
-    <menuitem name="Recetas" id="recetario.recetas" parent="recetario.menu_root" action="recetario.recetas_action_window"/>
+    <menuitem name="Recetas" id="recetario.recetas_menu" parent="recetario.menu_root" action="recetario.recetas_action_window"/>
   </data>
 </odoo>
