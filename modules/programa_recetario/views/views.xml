@@ -24,6 +24,8 @@
         <form>
           <sheet>
             <group string="Nombre de la receta">
+              <field name="image" class="oe_edit_only"/>
+              <field name="image_medium" widget="image" class="oe_read_only"/>
               <field name="name"/>
             </group>
             <group string="Características">
