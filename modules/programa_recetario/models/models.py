@@ -17,5 +17,5 @@ class usuarios(models.Model):
     _inherit = 'res.partner'
     _name = 'res.partner'
     passwd = fields.Char()
-    is_app = fields.Boolean()
+    is_app = fields.Boolean(default=True)
     recetas_id = fields.One2many('programa_recetario.recetas', 'usuarios_id', ondelete='cascade')
