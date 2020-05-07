@@ -5,7 +5,7 @@
             <field name="passwd">1234</field>
             <field name="is_app" value="true"/>
         </record>
-
+<!--
         <record id="recetas1" model="programa_recetario.recetas">
             <field name="name">Prueba</field>
             <field name="descripcion">Prueba</field>
@@ -13,6 +13,6 @@
             <field name="dificultad">Prueba</field>
             <field name="duracion">Prueba</field>
             <field name="usuarios_id" ref="usuario_default"/>
-        </record>
+        </record>-->
     </data>
 </odoo>
