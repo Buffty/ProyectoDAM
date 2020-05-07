@@ -105,6 +105,48 @@
       <field name="context">{'search_default_is_app':1}</field>
     </record>
 
+    <!-- INGREDIENTES -->
+
+    <!-- LISTA -->
+    <record model="ir.ui.view" id="programa_recetario.ingredientes_list">
+      <field name="name">ingredientes list</field>
+      <field name="model">programa_recetario.ingredientes</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- FORMULARIO -->
+
+    <!-- FORMULARIO -->
+
+    <record model="ir.ui.view" id="programa_recetario.ingredientes_form">
+      <field name="name">ingredientes form</field>
+      <field name="model">programa_recetario.ingredientes</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group string="Ingrediente: ">
+              <field name="name"/>
+            </group>
+            <group string="Características">
+              <field name="quantity"/>
+              <field name="recetas_id" string="Pertenece a: "/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- ACTION -->
+
+    <record model="ir.actions.act_window" id="programa_recetario.ingredientes_action_window">
+      <field name="name">ingredientes window</field>
+      <field name="res_model">programa_recetario.ingredientes</field>
+      <field name="view_mode">tree,form</field>
+    </record>
 
     <!-- MENUS -->
 
@@ -112,5 +154,6 @@
 
     <menuitem name="Recetas" id="programa_recetario.recetas_menu" parent="programa_recetario.menu_root" action="programa_recetario.recetas_action_window"/>
     <menuitem name="Usuarios" id="programa_recetario.usuarios_menu" parent="programa_recetario.menu_root" action="programa_recetario.usuarios_action_window"/>
+    <menuitem name="Ingredientes" id="programa_recetario.ingredientes_menu" parent="programa_recetario.menu_root" action="programa_recetario.ingredientes_action_window"/>
   </data>
 </odoo>

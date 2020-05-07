@@ -14,6 +14,7 @@ class recetas(models.Model):
     image = fields.Binary()
     image_medium = fields.Binary(compute='_medium_image',store=True)
     usuarios_id = fields.Many2one('res.partner')
+    ingredientes_id = fields.One2many('programa_recetario.ingredientes', 'recetas_id', ondelete='cascade')
 
     @api.depends('image')
     def _medium_image(self):
@@ -22,6 +23,12 @@ class recetas(models.Model):
             image_medium = tools.image_get_resized_images(image)
             f.image_medium = image_medium["image_medium"]
 
+
+class ingredientes(models.Model):
+    _name = 'programa_recetario.ingredientes'
+    name = fields.Char()
+    quantity = fields.Char()
+    recetas_id = fields.Many2one('programa_recetario.recetas')
 
 class usuarios(models.Model):
     _inherit = 'res.partner'
