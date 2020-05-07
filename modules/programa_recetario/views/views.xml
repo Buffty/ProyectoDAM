@@ -38,6 +38,9 @@
                 <field name="duracion"/>
               </group>
             </group>
+            <group string="Ingredientes: ">
+              <field name="ingredientes_id"/>
+            </group>
           </sheet>
         </form>
       </field>
@@ -76,8 +79,6 @@
           <pages string="Recetas">
             <field name="recetas_id">
               <field name="name"/>
-              <field name="descripcion"/>
-              <field name="tipo"/>
             </field>
           </pages>
         </notebook>
