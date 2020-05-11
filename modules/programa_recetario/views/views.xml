@@ -77,7 +77,7 @@
       <field name="arch" type="xml">
         <notebook position="inside">
           <pages string="Recetas">
-            <field name="isapp"/>
+            <field name="is_app"/>
             <field name="recetas_id">
               <field name="name"/>
             </field>
