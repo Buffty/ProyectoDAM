@@ -1,7 +1,7 @@
 <odoo>
     <data>
         <record id="usuario_default" model="res.partner">
-            <field name="name">Usuario de Prueba</field>
+            <field name="name">User</field>
             <field name="passwd">1234</field>
             <field name="is_app">True</field>
         </record>
